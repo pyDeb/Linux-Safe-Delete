@@ -1,10 +1,15 @@
 #!/bin/bash
 
+
 if [ ! -d ~/TRASH ];
 then
     mkdir ~/TRASH
 
-elif [ ls -la ~/TRASH | head -n1 | cut -d " " -f2 -ge 1 ];
+else
+    num_of_files=`ls -la ~/TRASH | head -n1 | cut -d " " -f2`
+fi
+
+if [ $num_of_files -ge 1 ];
 then
     #for val in Documents/*; do echo $val; done
     count_of_lines=`ls -lc ~/Trash | wc -l`
@@ -55,8 +60,10 @@ then
             rm -rf ~/TRASH/$file_name
         fi
     done 
+fi
 
-if [ $# -lt 2 ];
+
+if [ $# -lt 1 ];
 then
     echo "You should give me at least a file name or path to a file to be deleted"
     exit
@@ -66,9 +73,6 @@ fi
 
 for var in "$@";
 do
-    gzip var
+    gzip $var
     mv "$var.gz" ~/TRASH
 done
-
-
-    
